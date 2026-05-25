@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login – Sabay Portal</title>
+    <meta name="description" content="Sign in to Sabay News & Store. Access your account or manage the platform as an administrator.">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;0,14..32,800;1,14..32,400&display=swap" rel="stylesheet">
+</head>
+<body class="auth-body">
+
+    <div class="auth-wrapper">
+
+        <!-- Left Panel: Branding -->
+        <div class="auth-panel-left" style="background-image: url('images/login_bg.png');">
+            <div class="auth-brand-overlay">
+                <a href="index.html" class="auth-brand-logo">SABAY <span>PORTAL</span></a>
+                <h2 class="auth-brand-tagline">Your news.<br>Your store.<br>All in one place.</h2>
+                <div class="auth-brand-links">
+                    <a href="index.html"><i class="fas fa-newspaper"></i> News</a>
+                    <a href="store.html"><i class="fas fa-shopping-bag"></i> Store</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Panel: Form -->
+        <div class="auth-panel-right">
+
+            <!-- Role Toggle -->
+            <div class="role-toggle" id="role-toggle">
+                <button class="role-btn active" id="btn-user" data-role="user">
+                    <i class="fas fa-user"></i> User
+                </button>
+                <button class="role-btn" id="btn-admin" data-role="admin">
+                    <i class="fas fa-shield-halved"></i> Admin
+                </button>
+            </div>
+
+            <!-- Login Form -->
+            <div class="auth-form-container" id="login-form-container">
+                <h1 class="auth-title" id="auth-title">Welcome back</h1>
+                <p class="auth-subtitle" id="auth-subtitle">Sign in to your account</p>
+
+                <div class="auth-error-msg" id="auth-error" style="display:none;"></div>
+
+                <form class="auth-form" id="login-form" novalidate>
+                    <div class="form-group">
+                        <label for="login-email">Email</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-envelope input-icon"></i>
+                            <input type="email" id="login-email" placeholder="you@example.com" autocomplete="email">
+                        </div>
+                        <span class="field-error" id="error-email"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-lock input-icon"></i>
+                            <input type="password" id="login-password" placeholder="••••••••" autocomplete="current-password">
+                            <button type="button" class="toggle-password" id="toggle-pwd" aria-label="Show password">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                        <span class="field-error" id="error-password"></span>
+                    </div>
+                    <div class="form-row">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="remember-me"> Remember me
+                        </label>
+                        <a href="#" class="forgot-link">Forgot password?</a>
+                    </div>
+                    <button type="submit" class="auth-submit-btn" id="login-submit-btn">
+                        <span class="btn-text">Sign In</span>
+                        <span class="btn-loader" style="display:none;"><i class="fas fa-spinner fa-spin"></i></span>
+                    </button>
+                </form>
+
+                <p class="auth-switch-text">
+                    Don't have an account? <a href="#" id="switch-to-register">Create one</a>
+                </p>
+            </div>
+
+            <!-- Register Form -->
+            <div class="auth-form-container" id="register-form-container" style="display:none;">
+                <h1 class="auth-title">Create account</h1>
+                <p class="auth-subtitle">Join Sabay today — it's free</p>
+
+                <div class="auth-error-msg" id="register-error" style="display:none;"></div>
+
+                <form class="auth-form" id="register-form" novalidate>
+                    <div class="form-group">
+                        <label for="reg-name">Full Name</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-user input-icon"></i>
+                            <input type="text" id="reg-name" placeholder="John Doe" autocomplete="name">
+                        </div>
+                        <span class="field-error" id="error-reg-name"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-email">Email</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-envelope input-icon"></i>
+                            <input type="email" id="reg-email" placeholder="you@example.com" autocomplete="email">
+                        </div>
+                        <span class="field-error" id="error-reg-email"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-password">Password</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-lock input-icon"></i>
+                            <input type="password" id="reg-password" placeholder="Min. 8 characters" autocomplete="new-password">
+                        </div>
+                        <span class="field-error" id="error-reg-password"></span>
+                    </div>
+                    <button type="submit" class="auth-submit-btn">
+                        <span class="btn-text">Create Account</span>
+                        <span class="btn-loader" style="display:none;"><i class="fas fa-spinner fa-spin"></i></span>
+                    </button>
+                </form>
+
+                <p class="auth-switch-text">
+                    Already have an account? <a href="#" id="switch-to-login">Sign in</a>
+                </p>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

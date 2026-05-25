@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard – Sabay Store</title>
+    <meta name="description" content="Sabay Store administration dashboard. Manage products, users, and orders.">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body class="admin-body">
+
+    <!-- Sidebar -->
+    <aside class="admin-sidebar" id="admin-sidebar">
+        <div class="sidebar-logo">
+            <span class="logo-text">SABAY <span>ADMIN</span></span>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="#" class="sidebar-link active" data-section="overview">
+                <i class="fas fa-chart-pie"></i> <span>Overview</span>
+            </a>
+            <a href="#" class="sidebar-link" data-section="products">
+                <i class="fas fa-box"></i> <span>Products</span>
+            </a>
+            <a href="#" class="sidebar-link" data-section="users">
+                <i class="fas fa-users"></i> <span>Users</span>
+            </a>
+            <a href="#" class="sidebar-link" data-section="orders">
+                <i class="fas fa-receipt"></i> <span>Orders</span>
+            </a>
+            <a href="#" class="sidebar-link" data-section="posts">
+                <i class="fas fa-bullhorn"></i> <span>Community</span>
+            </a>
+            <div class="sidebar-divider"></div>
+            <a href="javascript:Storage.logout()" class="sidebar-link sidebar-logout">
+                <i class="fas fa-right-from-bracket"></i> <span>Logout</span>
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="admin-main">
+
+        <!-- Top Bar -->
+        <header class="admin-topbar">
+            <div class="topbar-left">
+                <button class="sidebar-toggle-btn" id="sidebar-toggle-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h2 class="topbar-title" id="topbar-title">Overview</h2>
+            </div>
+            <div class="topbar-right">
+                <div class="topbar-search">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search anything...">
+                </div>
+                <div class="topbar-admin">
+                    <div class="admin-avatar"><i class="fas fa-user-shield"></i></div>
+                    <span class="admin-name" id="admin-display-name">Administrator</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Dashboard Sections -->
+        <div class="admin-content" id="admin-content">
+
+            <!-- OVERVIEW SECTION -->
+            <section class="admin-section active" id="section-overview">
+                <div class="stats-grid">
+                    <div class="stat-card card-blue">
+                        <div class="stat-icon"><i class="fas fa-users"></i></div>
+                        <div class="stat-info">
+                            <span class="stat-value">0</span>
+                            <span class="stat-label">Total Users</span>
+                        </div>
+                    </div>
+                    <div class="stat-card card-green">
+                        <div class="stat-icon"><i class="fas fa-receipt"></i></div>
+                        <div class="stat-info">
+                            <span class="stat-value">0</span>
+                            <span class="stat-label">Total Orders</span>
+                        </div>
+                    </div>
+                    <div class="stat-card card-purple">
+                        <div class="stat-icon"><i class="fas fa-dollar-sign"></i></div>
+                        <div class="stat-info">
+                            <span class="stat-value">$0</span>
+                            <span class="stat-label">Revenue</span>
+                        </div>
+                    </div>
+                    <div class="stat-card card-orange">
+                        <div class="stat-icon"><i class="fas fa-box-open"></i></div>
+                        <div class="stat-info">
+                            <span class="stat-value">0</span>
+                            <span class="stat-label">Products</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="admin-table-card">
+                    <div class="table-card-header">
+                        <h3>Recent Orders</h3>
+                    </div>
+                    <div class="table-wrapper">
+                        <table class="admin-table" id="recent-orders-table">
+                            <thead>
+                                <tr>
+                                    <th>Order ID</th>
+                                    <th>Customer</th>
+                                    <th>Amount</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody><!-- JS injected --></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PRODUCTS SECTION -->
+            <section class="admin-section" id="section-products">
+                <div class="admin-table-card">
+                    <div class="table-card-header">
+                        <h3>All Products</h3>
+                        <button class="admin-action-btn" onclick="openModal('products')"><i class="fas fa-plus"></i> Add Product</button>
+                    </div>
+                    <div class="table-wrapper">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Image</th>
+                                    <th>Name</th>
+                                    <th>Price</th>
+                                    <th>Stock</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody><!-- JS injected --></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- USERS SECTION -->
+            <section class="admin-section" id="section-users">
+                <div class="admin-table-card">
+                    <div class="table-card-header">
+                        <h3>Registered Users</h3>
+                    </div>
+                    <div class="table-wrapper">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Role</th>
+                                    <th>Joined</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody><!-- JS injected --></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ORDERS SECTION -->
+            <section class="admin-section" id="section-orders">
+                <div class="admin-table-card">
+                    <div class="table-card-header">
+                        <h3>All Orders</h3>
+                    </div>
+                    <div class="table-wrapper">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Order ID</th>
+                                    <th>Customer</th>
+                                    <th>Items</th>
+                                    <th>Total</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody><!-- JS injected --></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- POSTS SECTION -->
+            <section class="admin-section" id="section-posts">
+                <div class="admin-table-card">
+                    <div class="table-card-header">
+                        <h3>Community Posts</h3>
+                    </div>
+                    <div class="table-wrapper">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>User</th>
+                                    <th>Content</th>
+                                    <th>Stats</th>
+                                    <th>Date</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody><!-- JS injected --></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div class="modal-overlay" id="admin-modal">
+        <div class="modal-container">
+            <h3 id="modal-title">Add Item</h3>
+            <form id="admin-form" class="auth-form">
+                <input type="hidden" id="edit-id">
+                <div id="modal-fields"></div>
+                <div class="form-row" style="margin-top: 20px;">
+                    <button type="button" class="role-btn" onclick="closeModal()">Cancel</button>
+                    <button type="submit" class="auth-submit-btn" style="width: auto; padding: 10px 30px;">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

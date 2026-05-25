@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hoeurn Academy - គ្រប់គ្រងវគ្គសិក្សា</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@300;400;600;700&display=swap');
+        body { font-family: 'Kantumruy Pro', sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+
+    <!-- របាខាងលើ -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50 border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-blue-900 uppercase tracking-wider">Hoeurn Academy</h1>
+            <div class="flex items-center gap-4">
+                <span id="user-status" class="text-sm font-semibold text-gray-600 bg-gray-100 px-3 py-1 rounded-full">Guest</span>
+                <button id="auth-btn" onclick="handleAuth()" class="bg-blue-600 text-white px-5 py-2 rounded-full font-bold hover:bg-blue-700 transition">Login</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-4 py-12">
+        <div id="admin-dashboard" class="hidden bg-white p-8 rounded-3xl shadow-sm border border-gray-200 mb-10">
+            <h2 class="text-2xl font-bold mb-6 text-blue-900">ផ្ទាំងគ្រប់គ្រង (Admin Dashboard)</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <input id="new-name" type="text" placeholder="ឈ្មោះវគ្គសិក្សា" class="border border-gray-300 p-3 rounded-xl w-full focus:ring-2 focus:ring-blue-500 outline-none">
+                <input id="new-price" type="number" placeholder="តម្លៃ ($)" class="border border-gray-300 p-3 rounded-xl w-full focus:ring-2 focus:ring-blue-500 outline-none">
+                <button onclick="addProduct()" class="bg-green-600 text-white px-6 py-3 rounded-xl font-bold hover:bg-green-700 transition shadow-md">បន្ថែមវគ្គសិក្សាថ្មី</button>
+            </div>
+        </div>
+
+        <h3 class="text-3xl font-bold text-gray-800 mb-10 border-l-8 border-blue-600 pl-6">វគ្គសិក្សាពេញនិយម</h3>
+        <div id="product-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+    </main>
+
+    <div id="cart-modal" class="fixed inset-0 bg-black bg-opacity-60 hidden z-50 flex justify-center items-center p-4">
+        <div class="bg-white w-full max-w-sm p-8 rounded-3xl shadow-2xl relative">
+            <button onclick="toggleCart()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 font-bold text-xl">✕</button>
+            <h3 class="text-2xl font-bold mb-6 text-center text-blue-900">ទូទាត់ប្រាក់</h3>
+            <img src="2026-05-25 00.09.51.jpg" alt="ABA QR Code" class="w-full h-auto border-4 border-gray-100 rounded-2xl mb-6 shadow-sm">
+            <p class="text-sm text-gray-600 mb-6 text-center leading-relaxed">សូមស្កេន QR កូដខាងលើដើម្បីបង់ប្រាក់ រួចផ្ញើរស្លីបទៅកាន់ Telegram របស់អ្នកគ្រូផ្ទាល់៖</p>
+            <a href="https://t.me/yoeurnhoeurn" target="_blank" class="block text-center bg-blue-600 text-white py-4 rounded-xl font-bold hover:bg-blue-700 transition text-lg shadow-lg">ទំនាក់ទំនងតាម Telegram</a>
+        </div>
+    </div>
+
+    <script>
+        let products = JSON.parse(localStorage.getItem('products')) || [
+            {name: 'វគ្គសិក្សា Fullstack Web', price: 50}, 
+            {name: 'វគ្គសិក្សា UI/UX Design', price: 40},
+            {name: 'វគ្គសិក្សា Digital Marketing', price: 30}
+        ];
+        
+        // ទាញយក Role ពី localStorage ដោយសុវត្ថិភាព
+        let role = localStorage.getItem('role') || 'Guest';
+
+        function handleAuth() {
+            if (role !== 'Guest') { 
+                localStorage.removeItem('role'); 
+                role = 'Guest';
+                location.reload(); 
+            } else {
+                const u = prompt("សូមបញ្ចូល Username:");
+                const p = prompt("សូមបញ្ចូល Password:");
+                
+                if (u === 'admin' && p === 'admin123') {
+                    role = 'Admin';
+                    localStorage.setItem('role', role);
+                    location.reload();
+                } else if (u === 'user' && p === 'user123') {
+                    role = 'User';
+                    localStorage.setItem('role', role);
+                    location.reload();
+                } else { 
+                    alert("ឈ្មោះឬលេខសម្ងាត់មិនត្រឹមត្រូវ!"); 
+                }
+            }
+        }
+
+        function addProduct() {
+            const name = document.getElementById('new-name').value;
+            const price = parseFloat(document.getElementById('new-price').value);
+            if(name && price) {
+                products.push({name, price});
+                localStorage.setItem('products', JSON.stringify(products));
+                render();
+            }
+        }
+
+        function deleteProduct(i) {
+            if(confirm("តើអ្នកប្រាកដជាចង់លុបវគ្គសិក្សានេះមែនទេ?")) {
+                products.splice(i, 1);
+                localStorage.setItem('products', JSON.stringify(products));
+                render();
+            }
+        }
+
+        function render() {
+            document.getElementById('user-status').innerText = "Account: " + role;
+            document.getElementById('auth-btn').innerText = role === 'Guest' ? 'Login' : 'Logout';
+            
+            const dashboard = document.getElementById('admin-dashboard');
+            if (role === 'Admin') {
+                dashboard.classList.remove('hidden');
+            } else {
+                dashboard.classList.add('hidden');
+            }
+            
+            const grid = document.getElementById('product-grid');
+            grid.innerHTML = products.map((p, i) => `
+                <div class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 hover:shadow-xl transition duration-300 flex flex-col justify-between">
+                    <div>
+                        <h4 class="text-2xl font-bold text-gray-800 mb-4">${p.name}</h4>
+                        <p class="text-blue-600 font-bold text-3xl mb-6">$${p.price}</p>
+                    </div>
+                    <div>
+                        <button onclick="toggleCart()" class="w-full bg-blue-900 text-white py-4 rounded-xl font-bold hover:bg-blue-800 transition shadow-md">ចុះឈ្មោះរៀន</button>
+                        ${role === 'Admin' ? `<button onclick="deleteProduct(${i})" class="w-full mt-3 bg-red-600 text-white py-3 rounded-xl font-bold hover:bg-red-700 transition">លុបវគ្គសិក្សា</button>` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function toggleCart() { document.getElementById('cart-modal').classList.toggle('hidden'); }
+        
+        // ចាប់ផ្តើម render នៅពេលផ្ទុកទំព័រ
+        render();
+    </script>
+</body>
+</html>
